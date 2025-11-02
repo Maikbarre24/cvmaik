@@ -3,813 +3,656 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV AI Premium - Con Ollama Gratuita</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <title>MAIK - CV Canva Style</title>
+
+    <!-- LIBRERIE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #34495e;
-            --success: #27ae60;
-            --warning: #f39c12;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            color: #2d3748;
+            line-height: 1.6;
             padding: 20px;
-            color: #333;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1350px;
             margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            font-weight: 300;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .ai-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--success), #2ecc71);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        .app-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+            gap: 25px;
         }
+        @media (max-width: 992px) { .container { grid-template-columns: 1fr; } }
 
-        @media (max-width: 1024px) {
-            .app-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
+        .form-section, .preview-section {
             background: white;
-            border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
-        .card h2 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-
-        .upload-area {
-            border: 3px dashed #ddd;
-            border-radius: 15px;
-            padding: 40px 20px;
+        h1 {
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            color: white;
+            font-size: 2.8rem;
             margin-bottom: 20px;
-            background: #fafafa;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .upload-area:hover {
-            border-color: var(--secondary);
-            background: #f0f8ff;
+        h2 {
+            color: #5a67d8;
+            font-size: 1.5rem;
+            border-left: 5px solid #5a67d8;
+            padding-left: 15px;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
 
-        .upload-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-
-        .photo-preview {
-            max-width: 150px;
-            max-height: 180px;
-            border-radius: 10px;
-            margin: 15px auto;
-            border: 3px solid var(--secondary);
-            display: none;
-        }
-
-        .form-group {
-            margin: 20px 0;
-        }
-
+        .form-group { margin-bottom: 18px; }
         label {
             display: block;
-            margin-bottom: 8px;
             font-weight: 600;
-            color: var(--primary);
+            margin-bottom: 6px;
+            color: #4a5568;
+            font-size: 0.95rem;
         }
-
-        input, select, textarea {
+        input, textarea, select {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            padding: 12px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            background: #f8fafc;
         }
-
-        input:focus, select:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            border-color: #5a67d8;
+            box-shadow: 0 0 0 4px rgba(90, 103, 216, 0.15);
+            background: white;
+        }
+        textarea { resize: vertical; min-height: 70px; }
+
+        .photo-upload {
+            text-align: center;
+            padding: 25px;
+            border: 3px dashed #a0aec0;
+            border-radius: 16px;
+            background: #f7fafc;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .photo-upload:hover { border-color: #5a67d8; background: #edf2f7; }
+        .photo-preview {
+            width: 100px;
+            height: 120px;
+            object-fit: cover;
+            margin: 12px auto 0;
+            border: 5px solid #5a67d8;
+            border-radius: 16px;
+            display: none;
+            box-shadow: 0 8px 20px rgba(90, 103, 216, 0.3);
         }
 
-        textarea {
-            height: 120px;
-            resize: vertical;
-            font-family: inherit;
+        .ai-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
         }
+        .ai-section h3 { margin-bottom: 12px; font-size: 1.2rem; }
+        .ai-controls {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn-ai {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .btn-ai:hover { background: #f7fafc; }
 
         .btn {
-            background: var(--primary);
+            background: linear-gradient(135deg, #5a67d8, #4c51bf);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
+            padding: 14px;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 5px;
-        }
-
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-
-        .btn:disabled {
-            background: #bdc3c7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-success {
-            background: var(--success);
-        }
-
-        .btn-success:hover {
-            background: #219a52;
-        }
-
-        .btn-large {
-            padding: 18px 40px;
-            font-size: 1.1rem;
+            font-weight: 700;
             width: 100%;
-            margin: 20px 0;
+            margin-top: 14px;
+            box-shadow: 0 8px 20px rgba(90, 103, 216, 0.3);
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(90, 103, 216, 0.4); }
+        .btn-success { background: linear-gradient(135deg, #48bb78, #38a169); }
+        .btn-print { background: linear-gradient(135deg, #f6ad55, #f57c00); color: #1a202c; }
+        .btn-pdf { background: linear-gradient(135deg, #e53e3e, #c53030); }
+
+        .test-section {
+            background: #c6f6d5;
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border-left: 6px solid #48bb78;
+        }
+        .test-result { margin-top: 12px; padding: 10px; border-radius: 12px; font-weight: bold; text-align: center; }
+        .test-ok { background: #9ae6b4; color: #22543d; }
+        .test-fail { background: #feb2b2; color: #742a2a; }
+
+        .preview-container {
+            max-height: 800px;
+            overflow-y: auto;
+            border-radius: 16px;
+            padding: 20px;
+            background: #f8fafc;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
         }
 
-        .loading {
+        /* CV CANVA 1 PAGINA */
+        .cv-canva {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            padding: 18mm;
+            margin: 0 auto;
+            font-size: 10.5pt;
+            line-height: 1.5;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cv-canva::before {
+            content: 'MAIK';
+            position: absolute;
+            top: 8mm;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50pt;
+            color: rgba(90, 103, 216, 0.05);
+            font-weight: 900;
+            letter-spacing: 8px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .cv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16mm;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cv-info h1 {
+            font-size: 28pt;
+            color: #1a202c;
+            margin: 0 0 6pt;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .cv-info h2 {
+            font-size: 16pt;
+            color: #5a67d8;
+            margin: 0 0 10pt;
+            font-weight: 600;
+        }
+
+        .cv-contact {
+            font-size: 9.5pt;
+            color: #4a5568;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 3pt;
+        }
+
+        .cv-contact i {
+            color: #5a67d8;
+            margin-right: 6px;
+            width: 14px;
             text-align: center;
-            padding: 30px;
-            display: none;
         }
 
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--secondary);
+        .cv-photo {
+            width: 95px;
+            height: 115px;
+            object-fit: cover;
+            border: 5px solid white;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(90, 103, 216, 0.3);
+        }
+
+        .cv-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16mm;
+            font-size: 10pt;
+        }
+
+        .cv-left, .cv-right {
+            display: flex;
+            flex-direction: column;
+            gap: 12mm;
+        }
+
+        .cv-section h3 {
+            font-size: 13pt;
+            color: #1a202c;
+            margin-bottom: 8pt;
+            font-weight: 700;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .cv-section h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: #5a67d8;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .cv-text {
+            font-size: 9.8pt;
+            color: #2d3748;
+            text-align: justify;
+            margin-bottom: 8pt;
+        }
+
+        .experience-item {
+            margin-bottom: 10pt;
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 6px;
+            width: 6px;
+            height: 6px;
+            background: #5a67d8;
+            border-radius: 50%;
+        }
+
+        .item-title {
+            font-weight: 700;
+            color: #1a202c;
+            font-size: 10.5pt;
+            margin-bottom: 2pt;
+        }
+
+        .item-subtitle {
+            color: #5a67d8;
+            font-size: 9.5pt;
+            font-style: italic;
+            margin-bottom: 4pt;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8pt;
+        }
+
+        .skill-tag {
+            background: #e6f7ff;
+            color: #0969da;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 9pt;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(9, 105, 218, 0.15);
+        }
+
+        .languages-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 6pt;
+        }
+
+        .languages-list li {
+            background: #f7fafc;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 9pt;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
         }
 
         .notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 15px 25px;
-            border-radius: 10px;
+            padding: 16px 28px;
+            background: #48bb78;
             color: white;
-            font-weight: 600;
+            border-radius: 12px;
+            font-weight: bold;
             z-index: 1000;
             display: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
+        .notification.error { background: #f56565; }
+        .notification.info { background: #5a67d8; }
 
-        .success { background: var(--success); }
-        .error { background: var(--accent); }
-        .warning { background: var(--warning); }
-        .info { background: var(--secondary); }
-
-        .cv-preview {
-            background: white;
-            border-radius: 15px;
-            padding: 0;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-
-        .preview-container {
-            padding: 30px;
-            min-height: 600px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-
-        .cv-template {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            min-height: 500px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .cv-header {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 30px;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--light);
-        }
-
-        .cv-name {
-            font-size: 2rem;
-            color: var(--primary);
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .cv-role {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            font-weight: 600;
-        }
-
-        .cv-photo {
-            width: 120px;
-            height: 140px;
-            border-radius: 8px;
-            object-fit: cover;
-            border: 3px solid var(--secondary);
-        }
-
-        .cv-section {
-            margin-bottom: 25px;
-        }
-
-        .section-title {
-            color: var(--primary);
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--secondary);
-        }
-
-        .section-content {
-            line-height: 1.6;
-            color: var(--dark);
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .skill-tag {
-            background: var(--light);
-            color: var(--primary);
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .feature {
-            text-align: center;
-            padding: 15px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: white;
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .ollama-config {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            color: white;
-        }
-
-        .config-toggle {
-            background: none;
-            border: 2px solid white;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 15px;
-        }
-
-        .config-content {
-            display: none;
-        }
-
-        .config-content.show {
-            display: block;
+        /* STAMPA 1 PAGINA */
+        @media print {
+            body, .form-section, .notification, .btn, .test-section { display: none !important; }
+            .preview-section { all: unset; width: 100%; padding: 0; }
+            .cv-canva {
+                width: 100% !important;
+                height: auto !important;
+                padding: 12mm !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+            }
+            @page { size: A4; margin: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎨 CV AI Premium</h1>
-            <p>Generatore intelligente di CV con Ollama gratuita</p>
-            <div class="ai-badge">🤖 IA LOCALE INTEGRATA</div>
+
+<h1>MAIK</h1>
+<p style="text-align:center;color:white;font-size:1.2rem;opacity:0.9;margin-bottom:20px;">
+    CV GENERATO DA MAIK – CANVA STYLE
+</p>
+
+<div class="container">
+    <!-- FORM -->
+    <div class="form-section">
+        <h2>MAIK DATI</h2>
+
+        <!-- TEST -->
+        <div class="test-section">
+            <h3>MAIK TEST</h3>
+            <button class="btn" onclick="runTest()" style="width:auto;padding:10px 20px;margin-top:8px;font-size:0.9rem;">
+                AVVIA TEST MAIK
+            </button>
+            <div id="testResult" class="test-result"></div>
         </div>
 
-        <!-- Features -->
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">🤖</div>
-                <h3>Ollama Gratuita</h3>
-                <p>IA locale senza costi</p>
+        <!-- OLLAMA -->
+        <div class="ai-section">
+            <h3>MAIK AI</h3>
+            <div class="form-group">
+                <label>MAIK URL</label>
+                <input type="text" id="ollamaUrl" value="http://localhost:11434">
             </div>
-            <div class="feature">
-                <div class="feature-icon">🎨</div>
-                <h3>Design Premium</h3>
-                <p>Layout moderno e professionale</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">⚡</div>
-                <h3>Elaborazione AI</h3>
-                <p>CV ottimizzati automaticamente</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📄</div>
-                <h3>PDF Professionale</h3>
-                <p>Download immediato</p>
-            </div>
-        </div>
-
-        <!-- Ollama Configuration -->
-        <div class="ollama-config">
-            <button class="config-toggle" onclick="toggleConfig()">⚙️ Configurazione Ollama</button>
-            <div class="config-content" id="configContent">
-                <div class="form-group">
-                    <label for="ollamaUrl">URL Ollama (default: http://localhost:11434)</label>
-                    <input type="text" id="ollamaUrl" value="http://localhost:11434" placeholder="http://localhost:11434">
-                </div>
-                <div class="form-group">
-                    <label for="ollamaModel">Modello Ollama</label>
-                    <select id="ollamaModel">
-                        <option value="llama2">Llama 2</option>
-                        <option value="mistral">Mistral</option>
-                        <option value="codellama">CodeLlama</option>
-                        <option value="llama2-uncensored">Llama 2 Uncensored</option>
-                    </select>
-                </div>
-                <button class="btn btn-success" onclick="testOllama()">Test Connessione Ollama</button>
+            <div class="form-group">
+                <label>MAIK MODELLO</label>
+                <select id="ollamaModel">
+                    <option value="llama2">llama2</option>
+                </select>
             </div>
         </div>
 
-        <div class="app-layout">
-            <!-- Input Section -->
-            <div class="card">
-                <h2>📝 Inserisci i tuoi dati</h2>
-                
-                <div class="upload-area" id="photoUploadArea">
-                    <div class="upload-icon">📸</div>
-                    <h3>Carica la tua foto (opzionale)</h3>
-                    <p>Trascina o clicca per selezionare</p>
-                    <input type="file" id="photoFile" accept="image/*" style="display: none;">
-                </div>
-                <img id="photoPreview" class="photo-preview" alt="Anteprima foto">
+        <!-- FOTO -->
+        <div class="photo-upload" onclick="document.getElementById('photoInput').click()">
+            <div style="font-size:42px;">MAIK FOTO</div>
+            <p style="margin:6px 0 0; color:#718096; font-size:0.9rem;">CLICCA PER CARICARE</p>
+            <input type="file" id="photoInput" accept="image/*" style="display:none;">
+        </div>
+        <img id="photoPreview" class="photo-preview" alt="MAIK FOTO">
 
-                <div class="form-group">
-                    <label for="userName">Nome e Cognome *</label>
-                    <input type="text" id="userName" placeholder="Mario Rossi" required>
-                </div>
+        <!-- CAMPI -->
+        <div class="form-group">
+            <label>MAIK NOME *</label>
+            <input type="text" id="fullName" value="Michael Jose Barreto Padilla">
+        </div>
+        <div class="form-group">
+            <label>MAIK RUOLO *</label>
+            <input type="text" id="jobTitle" value="Sviluppatore Full Stack">
+        </div>
+        <div class="form-group">
+            <label>MAIK EMAIL *</label>
+            <input type="email" id="email" value="maikbarre3000@gmail.com">
+        </div>
+        <div class="form-group">
+            <label>MAIK TEL</label>
+            <input type="tel" id="phone" value="+39 351 054 672">
+        </div>
+        <div class="form-group">
+            <label>MAIK LOCALITÀ</label>
+            <input type="text" id="location" value="Italia">
+        </div>
 
-                <div class="form-group">
-                    <label for="targetRole">Ruolo desiderato *</label>
-                    <input type="text" id="targetRole" placeholder="Es: Sviluppatore Full Stack, Data Scientist..." required>
-                </div>
-
-                <div class="form-group">
-                    <label for="userEmail">Email *</label>
-                    <input type="email" id="userEmail" placeholder="mario.rossi@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="userPhone">Telefono</label>
-                    <input type="tel" id="userPhone" placeholder="+39 123 456 789">
-                </div>
-
-                <div class="form-group">
-                    <label for="userExperience">Esperienze professionali *</label>
-                    <textarea id="userExperience" placeholder="Descrivi le tue esperienze lavorative, progetti, responsabilità..."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="userEducation">Formazione</label>
-                    <textarea id="userEducation" placeholder="Titoli di studio, corsi, certificazioni..."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="userSkills">Competenze (separate da virgola)</label>
-                    <input type="text" id="userSkills" placeholder="JavaScript, React, Node.js, Python, SQL...">
-                </div>
-
-                <div class="form-group">
-                    <label for="userLanguages">Lingue</label>
-                    <input type="text" id="userLanguages" placeholder="Italiano (madrelingua), Inglese (C1)...">
-                </div>
-
-                <button class="btn btn-success btn-large" onclick="generateCVWithAI()">
-                    🤖 GENERA CV CON INTELLIGENZA ARTIFICIALE
-                </button>
-
-                <div class="loading" id="loadingAI">
-                    <div class="spinner"></div>
-                    <h3>L'IA sta migliorando il tuo CV...</h3>
-                    <p>Ollama sta ottimizzando contenuti e formattazione</p>
-                </div>
-            </div>
-
-            <!-- Preview Section -->
-            <div class="card cv-preview">
-                <h2>👁️ Anteprima CV</h2>
-                <div class="preview-container">
-                    <div class="cv-template" id="cvTemplate">
-                        <div class="cv-header">
-                            <div>
-                                <div class="cv-name" id="previewName">Nome Cognome</div>
-                                <div class="cv-role" id="previewRole">Ruolo Professionale</div>
-                            </div>
-                            <img id="previewPhoto" class="cv-photo" style="display: none;">
-                        </div>
-
-                        <div class="cv-section">
-                            <div class="section-title">Profilo Professionale</div>
-                            <div class="section-content" id="previewProfile">
-                                Inserisci i tuoi dati e genera il CV con l'IA per vedere l'anteprima.
-                            </div>
-                        </div>
-
-                        <div class="cv-section">
-                            <div class="section-title">Esperienze Professionali</div>
-                            <div class="section-content" id="previewExperience">
-                                Le tue esperienze appariranno qui.
-                            </div>
-                        </div>
-
-                        <div class="cv-section">
-                            <div class="section-title">Formazione</div>
-                            <div class="section-content" id="previewEducation">
-                                Il tuo percorso formativo apparirà qui.
-                            </div>
-                        </div>
-
-                        <div class="cv-section">
-                            <div class="section-title">Competenze</div>
-                            <div class="section-content">
-                                <div class="skill-tags" id="previewSkills">
-                                    <div class="skill-tag">Competenze</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="cv-section">
-                            <div class="section-title">Lingue</div>
-                            <div class="section-content" id="previewLanguages">
-                                Italiano (madrelingua)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="btn btn-large" onclick="downloadPDF()" id="downloadBtn" style="display: none;">
-                    💾 SCARICA PDF
-                </button>
+        <div class="form-group">
+            <label>MAIK PROFILO</label>
+            <textarea id="profile">Sviluppatore Full Stack generato da MAIK.</textarea>
+            <div class="ai-controls">
+                <input type="text" id="profilePrompt" placeholder="MAIK: scrivi...">
+                <button class="btn-ai" onclick="generateAI('profile')">MAIK AI</button>
             </div>
         </div>
+
+        <div class="form-group">
+            <label>MAIK ESPERIENZE *</label>
+            <textarea id="experience">• Sviluppatore Full Stack - Tech SRL (2021-Oggi)</textarea>
+            <div class="ai-controls">
+                <input type="text" id="experiencePrompt" placeholder="MAIK: descrivi...">
+                <button class="btn-ai" onclick="generateAI('experience')">MAIK AI</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>MAIK FORMAZIONE</label>
+            <textarea id="education">• Laurea in Informatica - Università di Milano</textarea>
+            <div class="ai-controls">
+                <input type="text" id="educationPrompt" placeholder="MAIK: aggiungi...">
+                <button class="btn-ai" onclick="generateAI('education')">MAIK AI</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>MAIK COMPETENZE</label>
+            <input type="text" id="skills" value="JavaScript, React, Node.js, Python">
+        </div>
+
+        <div class="form-group">
+            <label>MAIK LINGUE</label>
+            <input type="text" id="languages" value="Italiano: C2, Inglese: C1">
+        </div>
+
+        <button class="btn" onclick="updateCV()">MAIK UPDATE</button>
     </div>
 
-    <div class="notification" id="notification"></div>
+    <!-- ANTEPRIMA -->
+    <div class="preview-section">
+        <h2>MAIK ANTEPRIMA</h2>
+        <div class="preview-container">
+            <div class="cv-canva" id="cvContent"></div>
+        </div>
+        <button class="btn btn-success" onclick="downloadPDF()">MAIK PDF</button>
+        <button class="btn btn-print" onclick="printCV()">MAIK STAMPA</button>
+    </div>
+</div>
 
-    <script>
-        // Configurazione Ollama
-        let ollamaUrl = 'http://localhost:11434';
-        let ollamaModel = 'llama2';
+<div class="notification" id="notif"></div>
 
-        function toggleConfig() {
-            document.getElementById('configContent').classList.toggle('show');
-        }
+<script>
+// FOTO
+document.getElementById('photoInput').addEventListener('change', e => {
+    if (e.target.files[0]) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+            const img = document.getElementById('photoPreview');
+            img.src = ev.target.result;
+            img.style.display = 'block';
+            updateCV();
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    }
+});
 
-        function updateOllamaConfig() {
-            ollamaUrl = document.getElementById('ollamaUrl').value;
-            ollamaModel = document.getElementById('ollamaModel').value;
-        }
+// TEST
+async function runTest() {
+    const result = document.getElementById('testResult');
+    result.innerHTML = 'MAIK TEST IN CORSO...';
+    const tests = [];
 
-        // Test connessione Ollama
-        async function testOllama() {
-            updateOllamaConfig();
-            showNotification('Test connessione Ollama in corso...', 'info');
-            
-            try {
-                const response = await fetch(`${ollamaUrl}/api/tags`);
-                if (response.ok) {
-                    showNotification('✅ Ollama connesso con successo!', 'success');
-                } else {
-                    throw new Error('Ollama non raggiungibile');
-                }
-            } catch (error) {
-                showNotification('❌ Errore connessione Ollama: ' + error.message, 'error');
-            }
-        }
+    try {
+        const url = document.getElementById('ollamaUrl').value;
+        const res = await fetch(`${url}/api/tags`);
+        tests.push(res.ok ? 'MAIK AI OK' : 'MAIK AI NO');
+    } catch { tests.push('MAIK AI OFF'); }
 
-        // Gestione upload foto
-        document.getElementById('photoUploadArea').addEventListener('click', () => {
-            document.getElementById('photoFile').click();
-        });
-
-        document.getElementById('photoFile').addEventListener('change', function(e) {
-            if (this.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('photoPreview');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                }
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-
-        // Generazione CV con IA
-        async function generateCVWithAI() {
-            const userName = document.getElementById('userName').value;
-            const targetRole = document.getElementById('targetRole').value;
-            const userEmail = document.getElementById('userEmail').value;
-            const userPhone = document.getElementById('userPhone').value;
-            const userExperience = document.getElementById('userExperience').value;
-            const userEducation = document.getElementById('userEducation').value;
-            const userSkills = document.getElementById('userSkills').value;
-            const userLanguages = document.getElementById('userLanguages').value;
-
-            if (!userName || !targetRole || !userEmail || !userExperience) {
-                showNotification('Compila tutti i campi obbligatori!', 'warning');
-                return;
-            }
-
-            const loading = document.getElementById('loadingAI');
-            const btn = document.querySelector('.btn-large');
-            
-            btn.disabled = true;
-            loading.style.display = 'block';
-
-            try {
-                updateOllamaConfig();
-                
-                // Prepara i dati per l'IA
-                const cvData = {
-                    nome: userName,
-                    ruolo: targetRole,
-                    email: userEmail,
-                    telefono: userPhone,
-                    esperienze: userExperience,
-                    formazione: userEducation,
-                    competenze: userSkills,
-                    lingue: userLanguages
-                };
-
-                // Prompt per Ollama
-                const prompt = `
-Crea un CV professionale in italiano con queste informazioni:
-
-CANDIDATO: ${cvData.nome}
-RUOLO DESIDERATO: ${cvData.ruolo}
-EMAIL: ${cvData.email}
-TELEFONO: ${cvData.telefono}
-
-ESPERIENZE: ${cvData.esperienze}
-
-FORMAZIONE: ${cvData.formazione}
-
-COMPETENZE: ${cvData.competenze}
-
-LINGUE: ${cvData.lingue}
-
-Per favore, crea:
-1. Un PROFILO PROFESSIONALE convincente (4-5 righe)
-2. Riorganizza le ESPERIENZE in punti elenco professionali
-3. Struttura la FORMAZIONE in modo chiaro
-4. Organizza le COMPETENZE per categorie
-5. Formatta le LINGUE in modo professionale
-
-Restituisci il risultato in formato JSON così:
-{
-    "profilo": "testo del profilo...",
-    "esperienze": ["punto 1", "punto 2", ...],
-    "formazione": ["punto 1", "punto 2", ...],
-    "competenze": ["competenza 1", "competenza 2", ...],
-    "lingue": ["lingua 1 - livello", "lingua 2 - livello"]
+    updateCV();
+    setTimeout(() => {
+        const cv = document.getElementById('cvContent').innerHTML;
+        tests.push(cv.includes('MAIK') ? 'MAIK CV OK' : 'MAIK CV VUOTO');
+        const allOk = tests.every(t => t.includes('OK'));
+        result.innerHTML = allOk ? '<div class="test-ok">MAIK: TUTTO OK</div>' : tests.join('<br>');
+    }, 300);
 }
-`;
 
-                // Chiamata a Ollama
-                const response = await fetch(`${ollamaUrl}/api/generate`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: ollamaModel,
-                        prompt: prompt,
-                        stream: false
-                    })
-                });
+// AI
+async function generateAI(field) {
+    const prompt = document.getElementById(field + 'Prompt').value.trim();
+    if (!prompt) return showNotif('MAIK: INSERISCI PROMPT!', 'error');
 
-                if (!response.ok) {
-                    throw new Error('Errore nella chiamata a Ollama');
-                }
+    showNotif('MAIK AI AL LAVORO...', 'info');
+    try {
+        const url = document.getElementById('ollamaUrl').value;
+        const job = document.getElementById('jobTitle').value || 'sviluppatore';
+        const fullPrompt = `MAIK: Scrivi in italiano solo il testo per "${field}" di un CV di un ${job}. Richiesta: "${prompt}".`;
 
-                const result = await response.json();
-                
-                // Estrai il JSON dalla risposta
-                const aiResponse = result.response;
-                const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
-                
-                if (jsonMatch) {
-                    const cvContent = JSON.parse(jsonMatch[0]);
-                    updateCVPreview(cvData, cvContent);
-                    showNotification('✅ CV generato con successo con IA!', 'success');
-                } else {
-                    // Fallback se l'IA non restituisce JSON
-                    updateCVPreview(cvData, createFallbackCV(cvData));
-                    showNotification('CV generato (modalità base)', 'info');
-                }
-
-                document.getElementById('downloadBtn').style.display = 'block';
-
-            } catch (error) {
-                console.error('Errore IA:', error);
-                // Fallback senza IA
-                updateCVPreview({
-                    nome: userName,
-                    ruolo: targetRole,
-                    email: userEmail,
-                    telefono: userPhone,
-                    esperienze: userExperience,
-                    formazione: userEducation,
-                    competenze: userSkills,
-                    lingue: userLanguages
-                }, createFallbackCV({
-                    nome: userName,
-                    ruolo: targetRole,
-                    email: userEmail,
-                    telefono: userPhone,
-                    esperienze: userExperience,
-                    formazione: userEducation,
-                    competenze: userSkills,
-                    lingue: userLanguages
-                }));
-                showNotification('CV generato (modalità base)', 'info');
-                document.getElementById('downloadBtn').style.display = 'block';
-            } finally {
-                btn.disabled = false;
-                loading.style.display = 'none';
-            }
-        }
-
-        function createFallbackCV(data) {
-            return {
-                profilo: `Professionista motivato specializzato in ${data.ruolo}. Con comprovata esperienza nel settore e forte orientamento ai risultati. Capacità di lavorare in team e risolvere problemi complessi.`,
-                esperienze: data.esperienze.split('\n').filter(exp => exp.trim()),
-                formazione: data.formazione.split('\n').filter(edu => edu.trim()),
-                competenze: data.competenze.split(',').map(skill => skill.trim()).filter(skill => skill),
-                lingue: data.lingue.split(',').map(lang => lang.trim()).filter(lang => lang)
-            };
-        }
-
-        function updateCVPreview(data, content) {
-            // Aggiorna header
-            document.getElementById('previewName').textContent = data.nome;
-            document.getElementById('previewRole').textContent = data.ruolo;
-
-            // Aggiorna foto
-            const photoFile = document.getElementById('photoFile').files[0];
-            if (photoFile) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('previewPhoto').src = e.target.result;
-                    document.getElementById('previewPhoto').style.display = 'block';
-                }
-                reader.readAsDataURL(photoFile);
-            }
-
-            // Aggiorna contenuti
-            document.getElementById('previewProfile').textContent = content.profilo;
-            
-            // Esperienze
-            const expElement = document.getElementById('previewExperience');
-            expElement.innerHTML = content.esperienze.map(exp => 
-                `<div style="margin-bottom: 8px;">• ${exp}</div>`
-            ).join('');
-
-            // Formazione
-            const eduElement = document.getElementById('previewEducation');
-            eduElement.innerHTML = content.formazione.map(edu => 
-                `<div style="margin-bottom: 8px;">• ${edu}</div>`
-            ).join('');
-
-            // Competenze
-            const skillsElement = document.getElementById('previewSkills');
-            skillsElement.innerHTML = content.competenze.map(skill => 
-                `<div class="skill-tag">${skill}</div>`
-            ).join('');
-
-            // Lingue
-            const langElement = document.getElementById('previewLanguages');
-            langElement.innerHTML = content.lingue.map(lang => 
-                `<div style="margin-bottom: 5px;">• ${lang}</div>`
-            ).join('');
-        }
-
-        // Download PDF
-        function downloadPDF() {
-            const element = document.getElementById('cvTemplate');
-            const options = {
-                margin: 10,
-                filename: `CV_${document.getElementById('userName').value}_${new Date().getTime()}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().set(options).from(element).save();
-            showNotification('📄 PDF scaricato con successo!', 'success');
-        }
-
-        // Notifiche
-        function showNotification(message, type) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.style.display = 'block';
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 4000);
-        }
-
-        // Inizializzazione
-        document.addEventListener('DOMContentLoaded', function() {
-            showNotification('🚀 Sistema CV AI pronto! Configura Ollama per usare l\'IA.', 'info');
+        const res = await fetch(`${url}/api/generate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ model: 'llama2', prompt: fullPrompt, stream: false })
         });
-    </script>
+
+        const data = await res.json();
+        document.getElementById(field).value = data.response?.trim() || prompt;
+        updateCV();
+        showNotif('MAIK: GENERATO!', 'success');
+    } catch {
+        const fallbacks = {
+            profile: `MAIK: ${job} con ${prompt}.`,
+            experience: `• MAIK Developer - Azienda (2021-Oggi)\n  ${prompt}`,
+            education: `• Laurea in Informatica\n  ${prompt}`
+        };
+        document.getElementById(field).value = fallbacks[field];
+        updateCV();
+        showNotif('MAIK: OFFLINE → ESEMPIO', 'error');
+    }
+}
+
+// AGGIORNA CV
+function updateCV() {
+    const d = {
+        name: document.getElementById('fullName').value || 'MAIK',
+        role: document.getElementById('jobTitle').value || 'MAIK DEV',
+        email: document.getElementById('email').value || 'maik@ai.com',
+        phone: document.getElementById('phone').value,
+        location: document.getElementById('location').value,
+        profile: document.getElementById('profile').value,
+        experience: document.getElementById('experience').value,
+        education: document.getElementById('education').value,
+        skills: document.getElementById('skills').value,
+        languages: document.getElementById('languages').value,
+        photo: document.getElementById('photoPreview').src
+    };
+
+    const photo = d.photo && d.photo !== location.href ? `<img src="${d.photo}" class="cv-photo">` : '';
+    const skills = d.skills.split(',').map(s => s.trim()).filter(s => s).map(s => `<div class="skill-tag">${s}</div>`).join('');
+
+    let html = `
+    <div class="cv-header">
+        <div class="cv-info">
+            <h1>${d.name}</h1>
+            <h2>${d.role}</h2>
+            <div class="cv-contact">
+                <div><i class="fas fa-envelope"></i> ${d.email}</div>
+                ${d.phone ? `<div><i class="fas fa-phone"></i> ${d.phone}</div>` : ''}
+                ${d.location ? `<div><i class="fas fa-map-marker-alt"></i> ${d.location}</div>` : ''}
+            </div>
+        </div>
+        ${photo}
+    </div>
+
+    <div class="cv-body">
+        <div class="cv-left">
+            ${d.profile ? `<div class="cv-section"><h3>MAIK PROFILO</h3><div class="cv-text">${d.profile.replace(/\n/g, '<br>')}</div></div>` : ''}
+            ${d.experience ? `<div class="cv-section"><h3>MAIK ESPERIENZE</h3><div class="cv-text">${d.experience.replace(/\n/g, '<br>')}</div></div>` : ''}
+        </div>
+        <div class="cv-right">
+            ${d.education ? `<div class="cv-section"><h3>MAIK FORMAZIONE</h3><div class="cv-text">${d.education.replace(/\n/g, '<br>')}</div></div>` : ''}
+            ${d.skills ? `<div class="cv-section"><h3>MAIK COMPETENZE</h3><div class="skills-container">${skills}</div></div>` : ''}
+            ${d.languages ? `<div class="cv-section"><h3>MAIK LINGUE</h3><ul class="languages-list">${d.languages.split(',').map(l => `<li>${l.trim()}</li>`).join('')}</ul></div>` : ''}
+        </div>
+    </div>`;
+
+    document.getElementById('cvContent').innerHTML = html;
+}
+
+// PDF
+async function downloadPDF() {
+    showNotif('MAIK: PDF IN DOWNLOAD...', 'info');
+    const element = document.getElementById('cvContent');
+    try {
+        const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+        pdf.save(`MAIK_CV.pdf`);
+        showNotif('MAIK: PDF PRONTO!', 'success');
+    } catch { showNotif('MAIK: ERRORE PDF', 'error'); }
+}
+
+// STAMPA
+function printCV() {
+    showNotif('MAIK: STAMPA A4...', 'info');
+    window.print();
+}
+
+// NOTIF
+function showNotif(msg, type = 'info') {
+    const n = document.getElementById('notif');
+    n.textContent = msg;
+    n.className = `notification ${type}`;
+    n.style.display = 'block';
+    setTimeout(() => n.style.display = 'none', 3000);
+}
+
+// INIT
+document.addEventListener('DOMContentLoaded', () => {
+    updateCV();
+    document.querySelectorAll('input, textarea').forEach(el => el.addEventListener('input', updateCV));
+    showNotif('MAIK ONLINE', 'success');
+});
+</script>
+
 </body>
 </html>
