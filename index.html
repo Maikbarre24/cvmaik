@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK - CV Canva Style</title>
+    <title>MAIK - CV Responsive</title>
 
     <!-- LIBRERIE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -18,59 +18,67 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #2d3748;
             line-height: 1.6;
-            padding: 20px;
             min-height: 100vh;
+            padding: 15px;
         }
 
+        /* RESPONSIVE CONTAINER */
         .container {
             max-width: 1350px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
-        @media (max-width: 992px) { .container { grid-template-columns: 1fr; } }
+        @media (min-width: 768px) {
+            .container { grid-template-columns: 1fr 1fr; gap: 25px; }
+        }
 
         .form-section, .preview-section {
             background: white;
-            padding: 30px;
-            border-radius: 18px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        @media (min-width: 768px) {
+            .form-section, .preview-section { padding: 30px; }
         }
 
         h1 {
             text-align: center;
             color: white;
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
             font-weight: 700;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
+        @media (min-width: 768px) { h1 { font-size: 2.8rem; margin-bottom: 20px; } }
 
         h2 {
             color: #5a67d8;
-            font-size: 1.5rem;
-            border-left: 5px solid #5a67d8;
-            padding-left: 15px;
-            margin-bottom: 20px;
+            font-size: 1.4rem;
+            border-left: 4px solid #5a67d8;
+            padding-left: 12px;
+            margin-bottom: 18px;
             font-weight: 600;
         }
 
-        .form-group { margin-bottom: 18px; }
+        .form-group { margin-bottom: 16px; }
         label {
             display: block;
             font-weight: 600;
             margin-bottom: 6px;
             color: #4a5568;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         input, textarea, select {
             width: 100%;
-            padding: 12px 14px;
+            padding: 11px 13px;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             font-size: 14px;
             background: #f8fafc;
+            transition: all 0.3s ease;
         }
         input:focus, textarea:focus, select:focus {
             outline: none;
@@ -78,52 +86,56 @@
             box-shadow: 0 0 0 4px rgba(90, 103, 216, 0.15);
             background: white;
         }
-        textarea { resize: vertical; min-height: 70px; }
+        textarea { resize: vertical; min-height: 65px; }
 
         .photo-upload {
             text-align: center;
-            padding: 25px;
+            padding: 20px;
             border: 3px dashed #a0aec0;
-            border-radius: 16px;
+            border-radius: 14px;
             background: #f7fafc;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            font-size: 0.9rem;
         }
         .photo-upload:hover { border-color: #5a67d8; background: #edf2f7; }
         .photo-preview {
-            width: 100px;
-            height: 120px;
+            width: 90px;
+            height: 110px;
             object-fit: cover;
-            margin: 12px auto 0;
-            border: 5px solid #5a67d8;
-            border-radius: 16px;
+            margin: 10px auto 0;
+            border: 4px solid #5a67d8;
+            border-radius: 14px;
             display: none;
-            box-shadow: 0 8px 20px rgba(90, 103, 216, 0.3);
+            box-shadow: 0 6px 18px rgba(90, 103, 216, 0.3);
+        }
+        @media (min-width: 768px) {
+            .photo-preview { width: 100px; height: 120px; }
         }
 
         .ai-section {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 25px;
+            padding: 18px;
+            border-radius: 14px;
+            margin-bottom: 20px;
         }
-        .ai-section h3 { margin-bottom: 12px; font-size: 1.2rem; }
+        .ai-section h3 { margin-bottom: 10px; font-size: 1.1rem; }
         .ai-controls {
             display: grid;
             grid-template-columns: 1fr auto;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 8px;
         }
         .btn-ai {
             background: white;
             color: #667eea;
             border: none;
-            padding: 10px 16px;
-            border-radius: 12px;
+            padding: 9px 14px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .btn-ai:hover { background: #f7fafc; }
 
@@ -131,101 +143,118 @@
             background: linear-gradient(135deg, #5a67d8, #4c51bf);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 12px;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             width: 100%;
-            margin-top: 14px;
-            box-shadow: 0 8px 20px rgba(90, 103, 216, 0.3);
+            margin-top: 12px;
+            box-shadow: 0 6px 18px rgba(90, 103, 216, 0.3);
         }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(90, 103, 216, 0.4); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(90, 103, 216, 0.4); }
         .btn-success { background: linear-gradient(135deg, #48bb78, #38a169); }
         .btn-print { background: linear-gradient(135deg, #f6ad55, #f57c00); color: #1a202c; }
         .btn-pdf { background: linear-gradient(135deg, #e53e3e, #c53030); }
 
         .test-section {
             background: #c6f6d5;
-            padding: 18px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            border-left: 6px solid #48bb78;
+            padding: 16px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            border-left: 5px solid #48bb78;
         }
-        .test-result { margin-top: 12px; padding: 10px; border-radius: 12px; font-weight: bold; text-align: center; }
-        .test-ok { background: #9ae6b4; color: #22543d; }
-        .test-fail { background: #feb2b2; color: #742a2a; }
+        .test-result {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 0.9rem;
+        }
 
         .preview-container {
-            max-height: 800px;
+            max-height: 70vh;
             overflow-y: auto;
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 14px;
+            padding: 16px;
             background: #f8fafc;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+            box-shadow: inset 0 0 18px rgba(0,0,0,0.05);
         }
+        @media (min-width: 768px) { .preview-container { max-height: 800px; } }
 
-        /* CV CANVA 1 PAGINA */
-        .cv-canva {
-            width: 210mm;
-            height: 297mm;
+        /* CV RESPONSIVE 1 PAGINA */
+        .cv-responsive {
+            width: 100%;
+            max-width: 210mm;
+            min-height: 297mm;
             background: white;
-            padding: 18mm;
+            padding: 15mm;
             margin: 0 auto;
-            font-size: 10.5pt;
+            font-size: 10pt;
             line-height: 1.5;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
+        @media (min-width: 768px) {
+            .cv-responsive { padding: 18mm; font-size: 10.5pt; }
+        }
 
-        .cv-canva::before {
+        .cv-responsive::before {
             content: 'MAIK';
             position: absolute;
-            top: 8mm;
+            top: 6mm;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 50pt;
+            font-size: 45pt;
             color: rgba(90, 103, 216, 0.05);
             font-weight: 900;
-            letter-spacing: 8px;
+            letter-spacing: 6px;
             z-index: 1;
             pointer-events: none;
         }
+        @media (min-width: 768px) { .cv-responsive::before { font-size: 50pt; } }
 
         .cv-header {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 16mm;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 14mm;
             position: relative;
             z-index: 2;
         }
+        @media (min-width: 768px) {
+            .cv-header { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+        }
 
         .cv-info h1 {
-            font-size: 28pt;
+            font-size: 24pt;
             color: #1a202c;
-            margin: 0 0 6pt;
+            margin: 0;
             font-weight: 700;
             letter-spacing: -0.5px;
         }
+        @media (min-width: 768px) { .cv-info h1 { font-size: 28pt; } }
 
         .cv-info h2 {
-            font-size: 16pt;
+            font-size: 15pt;
             color: #5a67d8;
-            margin: 0 0 10pt;
+            margin: 0 0 8pt;
             font-weight: 600;
         }
+        @media (min-width: 768px) { .cv-info h2 { font-size: 16pt; } }
 
         .cv-contact {
-            font-size: 9.5pt;
+            font-size: 9pt;
             color: #4a5568;
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             gap: 3pt;
         }
+        @media (min-width: 768px) { .cv-contact { font-size: 9.5pt; } }
 
         .cv-contact i {
             color: #5a67d8;
@@ -235,36 +264,44 @@
         }
 
         .cv-photo {
-            width: 95px;
-            height: 115px;
+            width: 85px;
+            height: 105px;
             object-fit: cover;
-            border: 5px solid white;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(90, 103, 216, 0.3);
+            border: 4px solid white;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(90, 103, 216, 0.3);
+            align-self: center;
+        }
+        @media (min-width: 768px) {
+            .cv-photo { width: 95px; height: 115px; align-self: flex-start; }
         }
 
         .cv-body {
             flex: 1;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16mm;
-            font-size: 10pt;
+            grid-template-columns: 1fr;
+            gap: 14mm;
+            font-size: 9.5pt;
+        }
+        @media (min-width: 768px) {
+            .cv-body { grid-template-columns: 1fr 1fr; gap: 16mm; }
         }
 
         .cv-left, .cv-right {
             display: flex;
             flex-direction: column;
-            gap: 12mm;
+            gap: 10mm;
         }
 
         .cv-section h3 {
-            font-size: 13pt;
+            font-size: 12.5pt;
             color: #1a202c;
-            margin-bottom: 8pt;
+            margin-bottom: 7pt;
             font-weight: 700;
             position: relative;
-            padding-left: 20px;
+            padding-left: 18px;
         }
+        @media (min-width: 768px) { .cv-section h3 { font-size: 13pt; } }
 
         .cv-section h3::before {
             content: '';
@@ -272,23 +309,23 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 12px;
-            height: 12px;
+            width: 11px;
+            height: 11px;
             background: #5a67d8;
             border-radius: 50%;
         }
 
         .cv-text {
-            font-size: 9.8pt;
+            font-size: 9.3pt;
             color: #2d3748;
             text-align: justify;
-            margin-bottom: 8pt;
+            margin-bottom: 7pt;
         }
 
         .experience-item {
-            margin-bottom: 10pt;
+            margin-bottom: 8pt;
             position: relative;
-            padding-left: 18px;
+            padding-left: 16px;
         }
 
         .experience-item::before {
@@ -305,62 +342,69 @@
         .item-title {
             font-weight: 700;
             color: #1a202c;
-            font-size: 10.5pt;
+            font-size: 10pt;
             margin-bottom: 2pt;
         }
 
         .item-subtitle {
             color: #5a67d8;
-            font-size: 9.5pt;
+            font-size: 9pt;
             font-style: italic;
-            margin-bottom: 4pt;
+            margin-bottom: 3pt;
         }
 
         .skills-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8pt;
+            gap: 7px;
+            margin-top: 7pt;
         }
 
         .skill-tag {
             background: #e6f7ff;
             color: #0969da;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 9pt;
+            padding: 4px 10px;
+            border-radius: 18px;
+            font-size: 8.5pt;
             font-weight: 600;
-            box-shadow: 0 2px 6px rgba(9, 105, 218, 0.15);
+            box-shadow: 0 2px 5px rgba(9, 105, 218, 0.15);
         }
 
         .languages-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 6pt;
+            gap: 8px;
+            margin-top: 5pt;
         }
 
         .languages-list li {
             background: #f7fafc;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 10px;
-            font-size: 9pt;
+            font-size: 8.5pt;
             color: #4a5568;
             border: 1px solid #e2e8f0;
         }
 
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 16px 28px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 14px 24px;
             background: #48bb78;
             color: white;
             border-radius: 12px;
             font-weight: bold;
             z-index: 1000;
             display: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            font-size: 0.9rem;
+            max-width: 90%;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .notification { top: 20px; right: 20px; left: auto; transform: none; }
         }
         .notification.error { background: #f56565; }
         .notification.info { background: #5a67d8; }
@@ -369,9 +413,9 @@
         @media print {
             body, .form-section, .notification, .btn, .test-section { display: none !important; }
             .preview-section { all: unset; width: 100%; padding: 0; }
-            .cv-canva {
+            .cv-responsive {
                 width: 100% !important;
-                height: auto !important;
+                min-height: auto !important;
                 padding: 12mm !important;
                 margin: 0 !important;
                 box-shadow: none !important;
@@ -383,7 +427,7 @@
 <body>
 
 <h1>MAIK</h1>
-<p style="text-align:center;color:white;font-size:1.2rem;opacity:0.9;margin-bottom:20px;">
+<p style="text-align:center;color:white;font-size:1.1rem;opacity:0.9;margin-bottom:15px;">
     CV GENERATO DA MAIK – CANVA STYLE
 </p>
 
@@ -395,7 +439,7 @@
         <!-- TEST -->
         <div class="test-section">
             <h3>MAIK TEST</h3>
-            <button class="btn" onclick="runTest()" style="width:auto;padding:10px 20px;margin-top:8px;font-size:0.9rem;">
+            <button class="btn" onclick="runTest()" style="width:auto;padding:10px 18px;margin-top:8px;font-size:0.85rem;">
                 AVVIA TEST MAIK
             </button>
             <div id="testResult" class="test-result"></div>
@@ -418,8 +462,8 @@
 
         <!-- FOTO -->
         <div class="photo-upload" onclick="document.getElementById('photoInput').click()">
-            <div style="font-size:42px;">MAIK FOTO</div>
-            <p style="margin:6px 0 0; color:#718096; font-size:0.9rem;">CLICCA PER CARICARE</p>
+            <div style="font-size:38px;">MAIK FOTO</div>
+            <p style="margin:6px 0 0; color:#718096; font-size:0.85rem;">CLICCA PER CARICARE</p>
             <input type="file" id="photoInput" accept="image/*" style="display:none;">
         </div>
         <img id="photoPreview" class="photo-preview" alt="MAIK FOTO">
@@ -490,7 +534,7 @@
     <div class="preview-section">
         <h2>MAIK ANTEPRIMA</h2>
         <div class="preview-container">
-            <div class="cv-canva" id="cvContent"></div>
+            <div class="cv-responsive" id="cvContent"></div>
         </div>
         <button class="btn btn-success" onclick="downloadPDF()">MAIK PDF</button>
         <button class="btn btn-print" onclick="printCV()">MAIK STAMPA</button>
@@ -517,7 +561,7 @@ document.getElementById('photoInput').addEventListener('change', e => {
 // TEST
 async function runTest() {
     const result = document.getElementById('testResult');
-    result.innerHTML = 'MAIK TEST IN CORSO...';
+    result.innerHTML = 'MAIK TEST...';
     const tests = [];
 
     try {
@@ -531,7 +575,7 @@ async function runTest() {
         const cv = document.getElementById('cvContent').innerHTML;
         tests.push(cv.includes('MAIK') ? 'MAIK CV OK' : 'MAIK CV VUOTO');
         const allOk = tests.every(t => t.includes('OK'));
-        result.innerHTML = allOk ? '<div class="test-ok">MAIK: TUTTO OK</div>' : tests.join('<br>');
+        result.innerHTML = allOk ? '<div class="test-ok">MAIK: ONLINE</div>' : tests.join('<br>');
     }, 300);
 }
 
